@@ -76,7 +76,7 @@ export function LoginForm({
           })
         );
         toast.success("Login successful!");
-        navigate("/dashboard");
+        navigate("/admin/dashboard");
       })
       .catch((error: Error) => {
         console.error("Login failed:", error);
