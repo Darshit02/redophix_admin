@@ -1,18 +1,16 @@
 import { LoginForm } from "@/components/forms/auth/login-form";
-import Silk from "@/components/globle/Silk";
+// import Silk from "@/components/globle/Silk";
 // import { ArrowLeft } from "lucide-react";
 
 export default function LoginPage() {
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 z-0">
-        <Silk />
-      </div>
-      
+      <div className="absolute bg-gradient-to-tr from-gray-800 to-neutral-900 z-0 inset-0"></div>
+
       {/* Dark overlay for better readability */}
       <div className="absolute inset-0 bg-black/50 z-10"></div>
-      
+
       {/* Content */}
       <div className="relative z-20 min-h-screen flex flex-col">
         {/* Header */}
@@ -27,14 +25,18 @@ export default function LoginPage() {
         <div className="flex-1 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
           <div className="w-full max-w-md">
             {/* Logo/Icon */}
-            <div className="flex justify-center mb-5 sm:mb-7">
-              <div className="bg-black/40 backdrop-blur-md p-3 sm:p-5 rounded-2xl border border-white/10">
-                <div className="w-7 h-7 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center">
-                  <div className="w-3 h-3 sm:w-6 sm:h-6 bg-white/40 rounded-full"></div>
+            <div className="flex flex-col justify-center mb-5 sm:mb-7">
+              <div className="flex items-center justify-center mb-2 sm:mb-3">
+                <div className="bg-black/40 backdrop-blur-md p-3 sm:p-5 rounded-2xl border border-white/10">
+                  <div className="w-7 h-7 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center">
+                    <div className="w-3 h-3 sm:w-6 sm:h-6 bg-white/40 rounded-full"></div>
+                  </div>
                 </div>
               </div>
+              <div className="text-xs sm:text-base flex justify-center items-center text-white/80 font-semibold ml-2">
+                Redophix
+              </div>
             </div>
-
             <LoginForm />
           </div>
         </div>
