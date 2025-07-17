@@ -20,10 +20,7 @@ import { setUser } from "@/store/user/authSlice";
 import { PasswordInput } from "@/components/globle/password-input";
 import { useNavigate } from "react-router-dom";
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"form">) {
+export function LoginForm({}: React.ComponentProps<"form">) {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { mutateAsync: login } = useLoginMutation();
@@ -77,22 +74,25 @@ export function LoginForm({
       })
       .catch((error: Error) => {
         console.error("Login failed:", error);
-        toast.error("Login failed, please check your credentials.");
+        // toast.error("Login failed, please check your credentials.");
       });
   };
   return (
     <div className="w-full max-w-lg mx-auto px-3">
       {/* Glass card container */}
-      <div className="backdrop-blur-md bg-black/30 border border-white/10 rounded-2xl p-5 sm:p-7 shadow-2xl">
-      {/*  */}
+      <div className="backdrop-blur-md bg-black/10 border border-white/10 rounded-2xl p-5 sm:p-7 shadow-2xl">
+        {/*  */}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 sm:space-y-5 w-full">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-3 sm:space-y-5 w-full"
+          >
             <div className="text-center space-y-2">
-              <h1 className="text-lg sm:text-xl font-bold text-white drop-shadow-lg">
-                Yooo, welcome back!
+              <h1 className="text-2xl sm:text-xl font-bold text-white drop-shadow-lg">
+                Sign In
               </h1>
               <p className="text-white/70 text-sm">
-                First time here? Sign up for free
+                Welcome back! Please enter your details to sign in to your account.
               </p>
             </div>
 
@@ -104,7 +104,7 @@ export function LoginForm({
                   <FormItem>
                     <FormControl>
                       <Input
-                        placeholder="Your email"
+                        placeholder="Email"
                         type="email"
                         {...field}
                         className="bg-black/40 border-white/20 text-white placeholder-white/50 focus:border-white/40 focus:ring-white/30 h-10 sm:h-12 rounded-lg backdrop-blur-sm"
@@ -122,7 +122,7 @@ export function LoginForm({
                   <FormItem>
                     <FormControl>
                       <PasswordInput
-                        placeholder="••••••••"
+                        placeholder="Password"
                         {...field}
                         className="bg-black/40 border-white/20 text-white placeholder-white/50 focus:border-white/40 focus:ring-white/30 h-10 sm:h-12 rounded-lg backdrop-blur-sm"
                       />
@@ -135,7 +135,7 @@ export function LoginForm({
 
             <Button
               type="submit"
-              className="w-full bg-white text-black hover:bg-white/90 font-medium h-10 sm:h-12 rounded-lg shadow-lg transition-all duration-200"
+              className="w-full bg-white text-black hover:bg-white/90 font-medium hover:cursor-pointer h-10 sm:h-12 rounded-lg shadow-lg transition-all duration-200"
             >
               Sign in
             </Button>
