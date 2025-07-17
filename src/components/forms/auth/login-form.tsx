@@ -7,10 +7,8 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -20,7 +18,6 @@ import { useLoginMutation } from "@/api/auth";
 import { AuthSchema } from "./schema";
 import { setUser } from "@/store/user/authSlice";
 import { PasswordInput } from "@/components/globle/password-input";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate } from "react-router-dom";
 
 export function LoginForm({
@@ -67,7 +64,7 @@ export function LoginForm({
       password: values.password,
     })
       .then((data: any) => {
-        const sessionExpiry = Date.now() + 7 * 24 * 3600 * 1000; // 7 days in milliseconds
+        const sessionExpiry = Date.now() + 7 * 24 * 3600 * 1000; //7 days in milliseconds
         dispatch(
           setUser({
             user: data,
@@ -84,67 +81,74 @@ export function LoginForm({
       });
   };
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8  mx-auto"
-      >
-        <div className="flex flex-col items-center gap-2 text-center ">
-          <h1 className="text-2xl font-bold">Login</h1>
-          <p className="text-muted-foreground text-sm text-balance">
-            Enter your email below to login to your account
-          </p>
-        </div>
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="Email" type="email" {...field} />
-              </FormControl>
-              <FormDescription>Please Enter your Email here</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <PasswordInput placeholder="password" {...field} />
-              </FormControl>
-              <FormDescription>Enter your password here.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="remember_me"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel>Remember Me</FormLabel>
-                <FormMessage />
-              </div>
-            </FormItem>
-          )}
-        />
-        <Button type="submit" className="w-full">
-          Submit
-        </Button>
-      </form>
-    </Form>
+    <div className="w-full max-w-lg mx-auto px-3">
+      {/* Glass card container */}
+      <div className="backdrop-blur-md bg-black/30 border border-white/10 rounded-2xl p-5 sm:p-7 shadow-2xl">
+      {/*  */}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 sm:space-y-5 w-full">
+            <div className="text-center space-y-2">
+              <h1 className="text-lg sm:text-xl font-bold text-white drop-shadow-lg">
+                Yooo, welcome back!
+              </h1>
+              <p className="text-white/70 text-sm">
+                First time here? Sign up for free
+              </p>
+            </div>
+
+            <div className="space-y-2 sm:space-y-3">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        placeholder="Your email"
+                        type="email"
+                        {...field}
+                        className="bg-black/40 border-white/20 text-white placeholder-white/50 focus:border-white/40 focus:ring-white/30 h-10 sm:h-12 rounded-lg backdrop-blur-sm"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-300" />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <PasswordInput
+                        placeholder="••••••••"
+                        {...field}
+                        className="bg-black/40 border-white/20 text-white placeholder-white/50 focus:border-white/40 focus:ring-white/30 h-10 sm:h-12 rounded-lg backdrop-blur-sm"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-300" />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full bg-white text-black hover:bg-white/90 font-medium h-10 sm:h-12 rounded-lg shadow-lg transition-all duration-200"
+            >
+              Sign in
+            </Button>
+
+            <div className="text-center text-xs text-white/60 px-2">
+              You acknowledge that you read, and agree to,{" "}
+              <a href="#" className="text-white/80 hover:text-white underline">
+                Terms of Service and our Privacy Policy
+              </a>
+            </div>
+          </form>
+        </Form>
+      </div>
+    </div>
   );
 }
