@@ -1,7 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
 import {
-  LayoutDashboard,
-  Folder,
   Settings,
   FileText,
   Phone,
@@ -14,12 +12,12 @@ import type { JSX } from "react";
 
 // Icon map for path segments
 const ICON_MAP: Record<string, JSX.Element> = {
-  dashboard: <Gauge className="w-8 h-8 mr-2" />,
-  portfolio: <Image className="w-8 h-8 mr-2" />,
-  inquiries: <FileText className="w-8 h-8 mr-2" />,
-  settings: <Settings className="w-8 h-8 mr-2" />,
-  "call-bookings": <Phone className="w-8 h-8 mr-2" />,
-  "pending-work": <ClipboardList className="w-8 h-8 mr-2" />,
+  dashboard: <Gauge className="md:w-8 md:h-8 mr-2" />,
+  portfolio: <Image className="md:w-8 md:h-8 mr-2" />,
+  inquiries: <FileText className="md:w-8 md:h-8 mr-2" />,
+  settings: <Settings className="md:w-8 md:h-8 mr-2" />,
+  "call-bookings": <Phone className="md:w-8 md:h-8 mr-2" />,
+  "pending-work": <ClipboardList className="md:w-8 md:h-8 mr-2" />,
 };
 
 function formatLabel(segment: string) {
@@ -41,7 +39,7 @@ export default function Breadcrumb() {
   if (segments.length === 0) return null;
 
   return (
-    <nav className="flex items-center text-3xl text-gray-400 dark:text-gray-300 mb-4">
+    <nav className="flex items-center text-xl md:text-3xl text-gray-400 dark:text-gray-300 mb-8">
       {paths.map((path, index) => {
         const segment = segments[index];
         const label = formatLabel(segment);
