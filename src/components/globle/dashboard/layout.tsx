@@ -1,4 +1,4 @@
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import Sidebar from "./sidebar";
 
@@ -26,21 +26,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           onClose={() => setSidebarOpen(false)} 
         />
       </div>
-
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col w-full overflow-hidden">
-        {/* Mobile header */}
-        <div className="p-4 md:hidden flex items-center border-b bg-white dark:bg-zinc-900">
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="text-gray-700 dark:text-gray-300 p-2 rounded hover:bg-gray-100 dark:hover:bg-zinc-800"
-          >
             <Menu className="w-6 h-6" />
           </button>
           <span className="text-lg font-bold ml-4 text-gray-900 dark:text-white">
             LazyLabs Admin
           </span>
         </div>
+
 
         {/* Page content */}
         <div className="flex-1 overflow-y-auto">

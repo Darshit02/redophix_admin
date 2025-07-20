@@ -114,7 +114,7 @@
 
 import { Link, useLocation } from "react-router-dom";
 import {
-  LayoutDashboard,
+  Gauge,
   Image,
   Mail,
   ClipboardList,
@@ -150,7 +150,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
   }, []);
 
   const menuItems = [
-    { name: "Dashboard", icon: LayoutDashboard, path: "/admin/dashboard" },
+    { name: "Dashboard", icon: Gauge, path: "/admin/dashboard" },
     { name: "Portfolio", icon: Image, path: "/admin/portfolio" },
     { name: "Inquiries", icon: Mail, path: "/admin/inquiries" },
     { name: "Pending Work", icon: ClipboardList, path: "/admin/pending-work" },
@@ -179,6 +179,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
         width: isMobile ? 260 : (collapsed ? 80 : 260)
       }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
+
       className="h-screen border-r flex flex-col overflow-hidden bg-white dark:bg-zinc-900 dark:border-zinc-800"
     >
       <div className="p-4 flex flex-col h-full">
@@ -258,6 +259,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
             </AnimatePresence>
           </button>
         </div>
+    
       </div>
     </motion.div>
   );

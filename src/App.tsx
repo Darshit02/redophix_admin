@@ -40,7 +40,6 @@
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/login/login-page";
-import Dashboard from "./pages/dashboard/dashboard";
 import Portfolio from "./pages/dashboard/portfolio";
 import Inquiries from "./pages/dashboard/inquiries";
 import PendingWork from "./pages/dashboard/pending-work";
@@ -50,6 +49,8 @@ import CallBooking from "./pages/dashboard/call-booking";
 import AdminLayout from "./components/globle/dashboard/admin-layout";
 import { ThemeProvider } from "@/components/theme-provider";
 import AddPortfolio from "./components/forms/portfolio/add-portfolio";
+import AdminLayout from "./components/globle/dashboard/admin-layout";
+import Dashboard from "./pages/dashboard/dashboard";
 
 import GuestRoute from "@/middleware/GuestRoute";
 import AuthRoute from "@/middleware/AuthRoute";
