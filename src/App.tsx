@@ -20,7 +20,7 @@
 //           <Route path="/admin" element={<AdminLayout />}>
 //             <Route path="dashboard" element={<Dashboard />} />
 //             <Route path="portfolio" element={<Portfolio />} />
-            
+
 //             <Route path="inquiries" element={<Inquiries />} />
 //             <Route path="pending-work" element={<PendingWork />} />
 //             <Route path="call-bookings" element={<CallBooking />} />
@@ -37,7 +37,6 @@
 
 // export default App;
 
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/login/login-page";
 import Portfolio from "./pages/dashboard/portfolio";
@@ -49,7 +48,6 @@ import CallBooking from "./pages/dashboard/call-booking";
 import AdminLayout from "./components/globle/dashboard/admin-layout";
 import { ThemeProvider } from "@/components/theme-provider";
 import AddPortfolio from "./components/forms/portfolio/add-portfolio";
-import AdminLayout from "./components/globle/dashboard/admin-layout";
 import Dashboard from "./pages/dashboard/dashboard";
 
 import GuestRoute from "@/middleware/GuestRoute";

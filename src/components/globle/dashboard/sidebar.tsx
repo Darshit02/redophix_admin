@@ -123,6 +123,7 @@ import {
   Settings,
   LogOut,
   X,
+  Menu,
 } from "lucide-react";
 
 import { useState, useEffect } from "react";
@@ -143,10 +144,10 @@ export default function Sidebar({ onClose }: SidebarProps) {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const menuItems = [
@@ -161,36 +162,45 @@ export default function Sidebar({ onClose }: SidebarProps) {
 
   const handleMenuClick = () => {
     if (isMobile && onClose) {
-      onClose(); // Close mobile sidebar when menu item is clicked
+      onClose();
     }
   };
 
   const handleToggleCollapse = () => {
     if (isMobile && onClose) {
-      onClose(); // Close mobile sidebar
+      onClose();
     } else {
-      setCollapsed(!collapsed); // Toggle desktop sidebar
+      setCollapsed(!collapsed);
     }
   };
 
   return (
     <motion.div
       animate={{
-        width: isMobile ? 260 : (collapsed ? 80 : 260)
+        width: isMobile ? 260 : collapsed ? 80 : 260,
       }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-
-      className="h-screen border-r flex flex-col overflow-hidden bg-white dark:bg-zinc-900 dark:border-zinc-800"
+      className="h-screen border-r flex flex-col overflow-hidden bg-white dark:bg-zinc-900/80 dark:border-zinc-800/80"
     >
       <div className="p-4 flex flex-col h-full">
         {/* Header with close/collapse button */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-end mb-8">
           <button
             onClick={handleToggleCollapse}
-            className="text-gray-500 dark:text-gray-400 p-2 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
-            aria-label={isMobile ? "Close sidebar" : (collapsed ? "Expand sidebar" : "Collapse sidebar")}
+            className=" hover:bg-black/5 dark:hover:bg-slate-800/20 text-gray-800 dark:text-gray-300 transition-colors cursor-pointer p-3 rounded-lg"
+            aria-label={
+              isMobile
+                ? "Close sidebar"
+                : collapsed
+                ? "Expand sidebar"
+                : "Collapse sidebar"
+            }
           >
-            <X className="w-5 h-5" />
+            {collapsed ? (
+              <Menu className="w-5 h-5" />
+            ) : (
+              <X className="w-5 h-5" />
+            )}
           </button>
         </div>
 
@@ -203,22 +213,22 @@ export default function Sidebar({ onClose }: SidebarProps) {
               title={collapsed && !isMobile ? name : ""}
               onClick={handleMenuClick}
               className={`flex items-center p-3 rounded-xl transition-all duration-200
-                hover:bg-indigo-50 dark:hover:bg-indigo-900 text-gray-700 dark:text-gray-300
+                
                 ${
                   location.pathname === path
-                    ? "bg-indigo-100 dark:bg-indigo-800 text-indigo-600 dark:text-indigo-300 font-medium"
-                    : ""
+                    ? "bg-white/20 dark:bg-slate-800/20 backdrop-blur-md shadow-sm text-white dark:text-white font-medium border border-white/40 dark:border-slate-800/40 "
+                    : "hover:bg-black/5 dark:hover:bg-slate-800/20 text-gray-800 dark:text-gray-300"
                 }
               `}
             >
               <Icon
                 className={`w-5 h-5 flex-shrink-0 ${
                   location.pathname === path
-                    ? "text-indigo-600 dark:text-indigo-300"
+                    ? "text-white dark:text-white"
                     : "text-gray-500 dark:text-gray-400"
                 }`}
               />
-              
+
               <AnimatePresence mode="wait">
                 {(!collapsed || isMobile) && (
                   <motion.span
@@ -240,10 +250,15 @@ export default function Sidebar({ onClose }: SidebarProps) {
         <div className="pt-6 mt-auto">
           <button
             title={collapsed && !isMobile ? "Logout" : ""}
-            className="flex items-center p-3 rounded-xl transition-all duration-200 hover:bg-red-50 dark:hover:bg-red-950 text-gray-600 dark:text-gray-300 w-full"
+            className="flex items-center p-3 rounded-xl transition-all duration-200 
+      bg-gradient-to-br from-white/20 to-white/10 
+      dark:from-slate-800/20 dark:to-slate-900/10 
+      backdrop-blur-md w-full
+      hover:cursor-pointer
+      text-gray-800 dark:text-gray-300 hover:text-white dark:hover:text-white border border-white/50 dark:border-slate-800/80 border-dashed"
           >
-            <LogOut className="w-5 h-5 text-red-500 dark:text-red-400 flex-shrink-0" />
-            
+            <LogOut className="w-5 h-5 text-gray-500 dark:text-gray-400 flex-shrink-0" />
+
             <AnimatePresence mode="wait">
               {(!collapsed || isMobile) && (
                 <motion.span
@@ -259,7 +274,6 @@ export default function Sidebar({ onClose }: SidebarProps) {
             </AnimatePresence>
           </button>
         </div>
-    
       </div>
     </motion.div>
   );
