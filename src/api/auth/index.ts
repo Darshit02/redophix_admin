@@ -9,7 +9,7 @@ import { apiEndPoints } from "../end-points";
 interface LoginResponse {
   success: string;
   message: string;
-  data: User & { access_token: string };
+  data: User & { accessToken: string };
 }
 
 interface LoginVariables {
