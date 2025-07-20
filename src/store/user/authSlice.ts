@@ -25,7 +25,7 @@ const authSlice = createSlice({
       state.user = user;
       state.accessToken = accessToken;
       state.sessionExpiry = sessionExpiry;
-      localStorage.setItem('token', accessToken);
+      localStorage.setItem('token', user.accessToken);
       localStorage.setItem('user', JSON.stringify(user));
       localStorage.setItem('sessionExpiry', sessionExpiry.toString());
     },
