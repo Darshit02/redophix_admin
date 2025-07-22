@@ -7,6 +7,7 @@ import {
   Image,
   ChevronRight,
   Gauge,
+  UsersRound,
 } from "lucide-react";
 import type { JSX } from "react";
 
@@ -16,7 +17,7 @@ const ICON_MAP: Record<string, JSX.Element> = {
   portfolio: <Image className="md:w-8 md:h-8 mr-2" />,
   inquiries: <FileText className="md:w-8 md:h-8 mr-2" />,
   settings: <Settings className="md:w-8 md:h-8 mr-2" />,
-  "call-bookings": <Phone className="md:w-8 md:h-8 mr-2" />,
+  teams: <UsersRound className="md:w-8 md:h-8 mr-2" />,
   "pending-work": <ClipboardList className="md:w-8 md:h-8 mr-2" />,
 };
 
@@ -25,21 +26,21 @@ function formatLabel(segment: string) {
     .replace(/-/g, " ")
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
-
 export default function Breadcrumb() {
   const location = useLocation();
 
-  // Split the path and remove empty, 'home', and 'admin' segments
+  // Remove empty, 'admin', and 'home' segments
   const segments = location.pathname
     .split("/")
     .filter((seg) => seg && seg.toLowerCase() !== "admin" && seg.toLowerCase() !== "home");
 
+  // Build breadcrumb paths including 'admin' prefix
   const paths = segments.map((_, i) => "/" + ["admin", ...segments.slice(0, i + 1)].join("/"));
 
   if (segments.length === 0) return null;
 
   return (
-    <nav className="flex items-center text-xl md:text-3xl text-gray-400 dark:text-gray-300 mb-8">
+    <nav className="flex items-center text-lg md:text-2xl text-gray-700 dark:text-gray-300 mb-6">
       {paths.map((path, index) => {
         const segment = segments[index];
         const label = formatLabel(segment);
@@ -48,15 +49,19 @@ export default function Breadcrumb() {
 
         return (
           <div className="flex items-center" key={path}>
-            {index > 0 && <ChevronRight className="w-4 h-4 mx-2" />}
+            {index > 0 && <ChevronRight className="w-4 h-4 mx-2 text-gray-400 dark:text-gray-500" />}
+
             {isLast ? (
-              <span className="flex items-center text-white font-medium">
-                {icon}
+              <span className="flex items-center font-semibold text-gray-900 dark:text-white">
+                {icon && <span className="mr-2">{icon}</span>}
                 {label}
               </span>
             ) : (
-              <Link to={path} className="flex items-center hover:text-white transition">
-                {icon}
+              <Link
+                to={path}
+                className="flex items-center hover:text-black dark:hover:text-white transition-colors"
+              >
+                {icon && <span className="mr-2">{icon}</span>}
                 {label}
               </Link>
             )}

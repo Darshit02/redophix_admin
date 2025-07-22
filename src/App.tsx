@@ -39,12 +39,11 @@
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/login/login-page";
-import Portfolio from "./pages/dashboard/portfolio";
+import Portfolio from "@/pages/portfolio/portfolio";
 import Inquiries from "./pages/dashboard/inquiries";
 import PendingWork from "./pages/dashboard/pending-work";
-import Settings from "./pages/dashboard/settings";
+import Settings from "@/pages/settings/settings";
 import Services from "./pages/dashboard/services";
-import CallBooking from "./pages/dashboard/call-booking";
 import AdminLayout from "./components/globle/dashboard/admin-layout";
 import { ThemeProvider } from "@/components/theme-provider";
 import AddPortfolio from "./components/forms/portfolio/add-portfolio";
@@ -52,6 +51,7 @@ import Dashboard from "./pages/dashboard/dashboard";
 
 import GuestRoute from "@/middleware/GuestRoute";
 import AuthRoute from "@/middleware/AuthRoute";
+import Teams from "./pages/dashboard/teams";
 
 function App() {
   return (
@@ -81,7 +81,7 @@ function App() {
             <Route path="portfolio" element={<Portfolio />} />
             <Route path="inquiries" element={<Inquiries />} />
             <Route path="pending-work" element={<PendingWork />} />
-            <Route path="call-bookings" element={<CallBooking />} />
+            <Route path="teams" element={<Teams />} />
             <Route path="services" element={<Services />} />
             <Route path="settings" element={<Settings />} />
           </Route>
