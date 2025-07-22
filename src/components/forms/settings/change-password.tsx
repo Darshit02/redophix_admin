@@ -50,9 +50,7 @@ export default function ChangePasswordForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
         
-        <div className="grid grid-cols-12 gap-4">
-          
-          <div className="col-span-4">
+        
             
         <FormField
           control={form.control}
@@ -63,15 +61,12 @@ export default function ChangePasswordForm() {
               <FormControl>
                 <PasswordInput placeholder="Password" {...field} />
               </FormControl>
-              
               <FormMessage />
             </FormItem>
           )}
         />
         
-          </div>
-          
-        </div>
+
         
         <FormField
           control={form.control}

@@ -124,6 +124,7 @@ import {
   LogOut,
   X,
   Menu,
+  UsersRound,
 } from "lucide-react";
 
 import { useState, useEffect } from "react";
@@ -139,7 +140,6 @@ export default function Sidebar({ onClose }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Check if mobile
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -155,15 +155,13 @@ export default function Sidebar({ onClose }: SidebarProps) {
     { name: "Portfolio", icon: Image, path: "/admin/portfolio" },
     { name: "Inquiries", icon: Mail, path: "/admin/inquiries" },
     { name: "Pending Work", icon: ClipboardList, path: "/admin/pending-work" },
-    { name: "Call Bookings", icon: Phone, path: "/admin/call-bookings" },
+    { name: "Teams", icon: UsersRound, path: "/admin/teams" },
     { name: "Services", icon: Package, path: "/admin/services" },
     { name: "Settings", icon: Settings, path: "/admin/settings" },
   ];
 
   const handleMenuClick = () => {
-    if (isMobile && onClose) {
-      onClose();
-    }
+    if (isMobile && onClose) onClose();
   };
 
   const handleToggleCollapse = () => {
@@ -176,18 +174,16 @@ export default function Sidebar({ onClose }: SidebarProps) {
 
   return (
     <motion.div
-      animate={{
-        width: isMobile ? 260 : collapsed ? 80 : 260,
-      }}
+      animate={{ width: isMobile ? 260 : collapsed ? 80 : 260 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="h-screen border-r flex flex-col overflow-hidden bg-white dark:bg-zinc-900/80 dark:border-zinc-800/80"
+      className="h-screen border-r flex flex-col overflow-hidden bg-white dark:bg-zinc-900/80 border-gray-200 dark:border-zinc-800/80"
     >
       <div className="p-4 flex flex-col h-full">
-        {/* Header with close/collapse button */}
+        {/* Header with collapse/close toggle */}
         <div className="flex items-center justify-end mb-8">
           <button
             onClick={handleToggleCollapse}
-            className=" hover:bg-black/5 dark:hover:bg-slate-800/20 text-gray-800 dark:text-gray-300 transition-colors cursor-pointer p-3 rounded-lg"
+            className="hover:bg-gray-100 dark:hover:bg-slate-800/20 text-gray-800 dark:text-gray-300 p-3 rounded-lg transition-colors"
             aria-label={
               isMobile
                 ? "Close sidebar"
@@ -204,61 +200,58 @@ export default function Sidebar({ onClose }: SidebarProps) {
           </button>
         </div>
 
-        {/* Navigation menu */}
+        {/* Navigation Menu */}
         <nav className="flex flex-col space-y-2 flex-1">
-          {menuItems.map(({ name, icon: Icon, path }) => (
-            <Link
-              key={name}
-              to={path}
-              title={collapsed && !isMobile ? name : ""}
-              onClick={handleMenuClick}
-              className={`flex items-center p-3 rounded-xl transition-all duration-200
-                
-                ${
-                  location.pathname === path
-                    ? "bg-white/20 dark:bg-slate-800/20 backdrop-blur-md shadow-sm text-white dark:text-white font-medium border border-white/40 dark:border-slate-800/40 "
-                    : "hover:bg-black/5 dark:hover:bg-slate-800/20 text-gray-800 dark:text-gray-300"
-                }
-              `}
-            >
-              <Icon
-                className={`w-5 h-5 flex-shrink-0 ${
-                  location.pathname === path
-                    ? "text-white dark:text-white"
-                    : "text-gray-500 dark:text-gray-400"
-                }`}
-              />
-
-              <AnimatePresence mode="wait">
-                {(!collapsed || isMobile) && (
-                  <motion.span
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -10 }}
-                    transition={{ duration: 0.2 }}
-                    className="ml-3 text-sm whitespace-nowrap overflow-hidden"
-                  >
-                    {name}
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </Link>
-          ))}
+          {menuItems.map(({ name, icon: Icon, path }) => {
+            const isActive = location.pathname === path;
+            return (
+              <Link
+                key={name}
+                to={path}
+                title={collapsed && !isMobile ? name : ""}
+                onClick={handleMenuClick}
+                className={`flex items-center p-3 rounded-xl transition-all duration-200
+                  ${
+                    isActive
+                      ? "bg-gray-200 dark:bg-slate-800 text-gray-900 dark:text-white font-semibold "
+                      : "hover:bg-gray-100 dark:hover:bg-slate-800 text-gray-700 dark:text-gray-300"
+                  }`}
+              >
+                <Icon
+                  className={`w-5 h-5 flex-shrink-0 ${
+                    isActive
+                      ? "text-gray-900 dark:text-white"
+                      : "text-gray-500 dark:text-gray-400"
+                  }`}
+                />
+                <AnimatePresence mode="wait">
+                  {(!collapsed || isMobile) && (
+                    <motion.span
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="ml-3 text-sm whitespace-nowrap overflow-hidden"
+                    >
+                      {name}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </Link>
+            );
+          })}
         </nav>
 
-        {/* Logout button */}
+        {/* Logout Button */}
         <div className="pt-6 mt-auto">
           <button
             title={collapsed && !isMobile ? "Logout" : ""}
             className="flex items-center p-3 rounded-xl transition-all duration-200 
-      bg-gradient-to-br from-white/20 to-white/10 
-      dark:from-slate-800/20 dark:to-slate-900/10 
-      backdrop-blur-md w-full
-      hover:cursor-pointer
-      text-gray-800 dark:text-gray-300 hover:text-white dark:hover:text-white border border-white/50 dark:border-slate-800/80 border-dashed"
+              bg-gradient-to-br from-gray-100 to-white dark:from-slate-800/20 dark:to-slate-900/10 
+              backdrop-blur-md w-full hover:bg-gray-200 dark:hover:bg-slate-800 cursor-pointer
+              text-gray-700 dark:text-gray-300 "
           >
-            <LogOut className="w-5 h-5 text-gray-500 dark:text-gray-400 flex-shrink-0" />
-
+            <LogOut className="w-5 h-5  flex-shrink-0 " />
             <AnimatePresence mode="wait">
               {(!collapsed || isMobile) && (
                 <motion.span
@@ -266,7 +259,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -10 }}
                   transition={{ duration: 0.2 }}
-                  className="ml-3 text-sm whitespace-nowrap overflow-hidden"
+                  className="ml-3 text-sm whitespace-nowrap overflow-hidden "
                 >
                   Logout
                 </motion.span>
