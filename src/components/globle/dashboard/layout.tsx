@@ -2,12 +2,11 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import Sidebar from "./sidebar";
 import UserAvatar from "../avatar";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "@/store/store";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store/store";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.auth.user);
 
   return (
