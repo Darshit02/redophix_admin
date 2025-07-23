@@ -52,6 +52,7 @@ import Dashboard from "./pages/dashboard/dashboard";
 import GuestRoute from "@/middleware/GuestRoute";
 import AuthRoute from "@/middleware/AuthRoute";
 import Teams from "./pages/dashboard/teams";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 
 function App() {
   return (
@@ -84,6 +85,8 @@ function App() {
             <Route path="teams" element={<Teams />} />
             <Route path="services" element={<Services />} />
             <Route path="settings" element={<Settings />} />
+            {/* reset Password page */}
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
           </Route>
 
           {/* Also Protected - Add Portfolio Page */}

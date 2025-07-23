@@ -1,10 +1,15 @@
+import ResetPasswordAlert from "@/components/forms/settings/alert-reset-password";
 import ChangeEmailForm from "@/components/forms/settings/change-email";
 import DarkModetoggle from "@/components/globle/settings/dark-mode";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { LockKeyhole } from "lucide-react";
+import { useState } from "react";
 
 const Settings = () => {
+
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="flex flex-col h-full px-4 py-6 md:px-6">
       <p className="text-sm md:text-base text-gray-800 dark:text-gray-400 mb-3">
@@ -22,13 +27,15 @@ const Settings = () => {
           <div className="flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0">
             <div className="w-full md:max-w-md">
               <ChangeEmailForm />
-              <Button className="cursor-pointer">
+              <Button onClick={() => setOpen(true)} className="cursor-pointer">
                 <LockKeyhole className="h-3 w-3" />
                 Change Password
               </Button>
             </div>
           </div>
         </div>
+
+        <ResetPasswordAlert open={open} setOpen={setOpen} />
 
         <Separator />
 

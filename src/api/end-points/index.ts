@@ -6,8 +6,13 @@ const settingEndPoints = {
     emailchange : "/settings/email-change"
 }
 
-export const apiEndPoints = {
-    ...authEndPoints,
-    ...settingEndPoints
+const resetPasswordEndpoints = {
+  resetPasswordEmailSend: "/settings/reset-password-email-send",
+  resetPasswordConfirm: (token: string) => `/settings/reset-password/${token}`,
+};
 
-}
+export const apiEndPoints = {
+  ...authEndPoints,
+  ...settingEndPoints,
+  ...resetPasswordEndpoints,
+};
