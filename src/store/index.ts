@@ -1,12 +1,14 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import authReducer from './user/authSlice';
 import { settingDataSlice } from './feature/settingDataSlice';
+import { teamDataSlice } from './feature/teamDataSlice';
 
 
 // Combine all your reducers
 const appReducer = combineReducers({
   auth: authReducer,
-  setting: settingDataSlice.reducer
+  setting: settingDataSlice.reducer,
+  teams : teamDataSlice.reducer
 });
 
 // Root reducer with reset functionality
