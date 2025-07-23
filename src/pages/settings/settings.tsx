@@ -7,7 +7,7 @@ import { LockKeyhole } from "lucide-react";
 const Settings = () => {
   return (
     <div className="flex flex-col h-full px-4 py-6 md:px-6">
-      <p className="text-sm md:text-base text-gray-800 dark:text-gray-400 mb-3">
+      <p className="text-sm md:text-base text-gray-800 dark:text-gray-200 mb-3">
         Manage your account settings and preferences here.
       </p>
 
