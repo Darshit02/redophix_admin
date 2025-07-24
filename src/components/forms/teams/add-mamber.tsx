@@ -17,7 +17,7 @@ import { PhoneInput } from "@/components/globle/phone-input";
 import BackButton from "@/components/globle/back-button";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/store/store";
-import { ADD_TEAM_MAMBER } from "@/api/teams/team-mamber";
+import { ADD_TEAM_MEMBER } from "@/api/teams/team-mamber";
 import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
@@ -38,7 +38,7 @@ export default function AddMamber() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const res = await dispatch(ADD_TEAM_MAMBER(values));
+      const res = await dispatch(ADD_TEAM_MEMBER(values));
       console.log(res);
       navigate(-1);
     } catch (error) {

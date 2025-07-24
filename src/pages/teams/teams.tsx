@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CirclePlus } from "lucide-react";
 
-import { GET_TEAM_MAMBER } from "@/api/teams/team-mamber";
+import { GET_TEAM_MEMBER } from "@/api/teams/team-mamber";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { AppDispatch } from "@/store/store";
@@ -12,11 +12,12 @@ const Teams = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const teamData = useSelector((state: any) => state.TeamData ?? []);
+  const teamData = useSelector((state: any) => state.teams.data ?? []);
+
   console.log(teamData)
   const fetchTeamMambers = () => {
     const payload: any = {};
-    dispatch(GET_TEAM_MAMBER(payload));
+    dispatch(GET_TEAM_MEMBER(payload));
   };
 
   useEffect(() => {
@@ -26,6 +27,8 @@ const Teams = () => {
   const handleAddMemberClick = () => {
     navigate("/admin/teams/add-mamber");
   };
+
+  console.log("fetch team Data", teamData);
 
   return (
     <div className="flex flex-col h-full px-4 py-6 md:px-6">
