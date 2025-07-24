@@ -24,7 +24,7 @@ export default function Portfolio() {
         <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
           Portfolio Management
         </h1>
-        <Link to="/admin/portfolio/add" className="inline-flex items-center cursor-pointer">
+        <Link to="/admin/portfolio/add-projects" className="inline-flex items-center cursor-pointer">
           <button className="flex items-center gap-2 text-indigo-600 text-sm px-4 py-2 border border-dashed border-indigo-600 rounded-lg  transition">
             <PlusCircle className="w-4 h-4" /> Add New
           </button>

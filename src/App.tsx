@@ -13,8 +13,8 @@ import Dashboard from "./pages/dashboard/dashboard";
 import GuestRoute from "@/middleware/GuestRoute";
 import AuthRoute from "@/middleware/AuthRoute";
 import Teams from "./pages/teams/teams";
-import AddMember from "./components/forms/teams/add-mamber";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import AddMamber from "./components/forms/teams/add-mamber";
 
 function App() {
   return (
@@ -43,7 +43,7 @@ function App() {
               </AuthRoute>
             }
           >
-            <Route index element={<Dashboard />} /> 
+            <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="portfolio" element={<Portfolio />} />
             <Route path="inquiries" element={<Inquiries />} />
@@ -51,17 +51,10 @@ function App() {
             <Route path="teams" element={<Teams />} />
             <Route path="services" element={<Services />} />
             <Route path="settings" element={<Settings />} />
-            
+
             {/* Nested routes for admin sub-pages */}
-            <Route path="portfolio/add" element={<AddPortfolio />} />
-            <Route 
-              path="teams/add-member" 
-              element={
-                <AuthRoute>
-                  <AddMember />
-                </AuthRoute>
-              } 
-            />
+            <Route path="portfolio/add-projects" element={<AddPortfolio />} />
+            <Route path="teams/add-member" element={<AddMamber/>} />
           </Route>
         </Routes>
       </BrowserRouter>
