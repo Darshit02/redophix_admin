@@ -1,44 +1,28 @@
 import { LoginForm } from "@/components/forms/auth/login-form";
-// import Silk from "@/components/globle/Silk";
-// import { ArrowLeft } from "lucide-react";
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute bg-gradient-to-tr from-gray-800 to-neutral-900 z-0 inset-0"></div>
-
-      {/* Dark overlay for better readability */}
-      <div className="absolute inset-0 bg-black/50 z-10"></div>
+    <div className="min-h-screen bg-gradient-to-tr from-white via-gray-100 to-gray-200 relative overflow-hidden">
+      {/* Optional gradient overlay if you want soft haze */}
+      <div className="absolute inset-0 bg-white/60 backdrop-blur-sm z-10" />
 
       {/* Content */}
-      <div className="relative z-20 min-h-screen flex flex-col">
-        {/* Header */}
-        {/* <div className="p-4 sm:p-6 flex-shrink-0">
-          <button className="flex items-center gap-2 text-white/80 hover:text-white transition-colors backdrop-blur-sm bg-black/20 px-3 py-2 rounded-lg">
-            <ArrowLeft className="size-4" />
-            Back
-          </button>
-        </div> */}
-
-        {/* Main Content */}
-        <div className="flex-1 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-          <div className="w-full max-w-md">
-            {/* Logo/Icon */}
-            <div className="flex flex-col justify-center mb-5 sm:mb-7">
-              <div className="flex items-center justify-center mb-2 sm:mb-3">
-                <div className="bg-black/40 backdrop-blur-md p-3 sm:p-5 rounded-2xl border border-white/10">
-                  <div className="w-7 h-7 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center">
-                    <div className="w-3 h-3 sm:w-6 sm:h-6 bg-white/40 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-              <div className="text-xs sm:text-base flex justify-center items-center text-white/80 font-semibold ml-2">
-                Redophix
+      <div className="relative z-20 flex items-center justify-center min-h-screen px-4">
+        <div className="w-full max-w-md mx-auto">
+          {/* Logo */}
+          <div className="flex flex-col items-center justify-center mb-6 sm:mb-8">
+            <div className="bg-white shadow-md p-4 sm:p-6 rounded-2xl border border-gray-200">
+              <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gray-200 rounded-full flex items-center justify-center">
+                <div className="w-3 h-3 sm:w-5 sm:h-5 bg-gray-400 rounded-full" />
               </div>
             </div>
-            <LoginForm />
+            <div className="mt-3 text-sm sm:text-base text-gray-700 font-semibold">
+              Redophix
+            </div>
           </div>
+
+          {/* Form */}
+          <LoginForm />
         </div>
       </div>
     </div>
