@@ -1,34 +1,31 @@
-import { Button } from '@/components/ui/button';
-import { ChevronLeft } from 'lucide-react';
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Button } from "@/components/ui/button";
+import { ChevronLeft } from "lucide-react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-type Props = {};
-
-const BackButton: React.FC<Props> = () => {
+const BackButton = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        navigate(-1); // Navigate back on "Escape"
+      if (event.key === "Escape") {
+        navigate(-1);
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [navigate]);
 
   return (
     <Button
+      type="button"
       variant="outline"
-      className="rounded-none flex justify-center items-center"
+      title="Go back"
+      className="flex items-center gap-2 rounded-md text-muted-foreground hover:text-foreground cursor-pointer"
       onClick={() => navigate(-1)}
     >
-      <ChevronLeft />
+      <ChevronLeft className="w-4 h-4" />
       Back
     </Button>
   );

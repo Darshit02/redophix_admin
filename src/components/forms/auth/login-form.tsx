@@ -20,7 +20,7 @@ import { setUser } from "@/store/user/authSlice";
 import { PasswordInput } from "@/components/globle/password-input";
 import { useNavigate } from "react-router-dom";
 
-export function LoginForm({}: React.ComponentProps<"form">) {
+export function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { mutateAsync: login } = useLoginMutation();
@@ -46,106 +46,105 @@ export function LoginForm({}: React.ComponentProps<"form">) {
 
   const onSubmit = async (values: z.infer<typeof AuthSchema>) => {
     if (values.remember_me) {
-      // Store credentials in local storage
       localStorage.setItem(
         "login-credentials",
         JSON.stringify({ email: values.email, password: values.password })
       );
     } else {
-      // Clear stored credentials if "Remember Me" is unchecked
       localStorage.removeItem("login-credentials");
     }
 
-    login({
-      email: values.email,
-      password: values.password,
-    })
-      .then((data: any) => {
-        const sessionExpiry = Date.now() + 7 * 24 * 3600 * 1000; //7 days in milliseconds
-        dispatch(
-          setUser({
-            user: data,
-            accessToken: data.access_token,
-            sessionExpiry,
-          })
-        );
-        toast.success("Login successful!");
-        navigate("/admin/dashboard");
-      })
-      .catch((error: Error) => {
-        console.error("Login failed:", error);
-        // toast.error("Login failed, please check your credentials.");
+    try {
+      const data: any = await login({
+        email: values.email,
+        password: values.password,
       });
+
+      const sessionExpiry = Date.now() + 7 * 24 * 3600 * 1000;
+      dispatch(
+        setUser({
+          user: data,
+          accessToken: data.access_token,
+          sessionExpiry,
+        })
+      );
+      toast.success("Login successful!");
+      navigate("/admin/dashboard");
+    } catch (error) {
+      console.error("Login failed:", error);
+      toast.error("Invalid credentials.");
+    }
   };
+
   return (
-    <div className="w-full max-w-lg mx-auto px-3">
-      {/* Glass card container */}
-      <div className="backdrop-blur-md bg-black/10 border border-white/10 rounded-2xl p-5 sm:p-7 shadow-2xl">
-        {/*  */}
+    <div className="w-full max-w-max mx-auto px-4">
+      <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-6 sm:p-8">
+        <div className="text-center mb-6 space-y-1">
+          <h2 className="text-2xl font-semibold text-gray-800">Sign in</h2>
+          <p className="text-sm text-gray-500">Enter your credentials below</p>
+        </div>
+
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-3 sm:space-y-5 w-full"
-          >
-            <div className="text-center space-y-2">
-              <h1 className="text-2xl sm:text-xl font-bold text-white drop-shadow-lg">
-                Sign In
-              </h1>
-              <p className="text-white/70 text-sm">
-                Welcome back! Please enter your details to sign in to your account.
-              </p>
-            </div>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="Email"
+                      type="email"
+                      {...field}
+                      className="h-10 b border border-gray-300 text-gray-900 placeholder:text-gray-600 focus:ring-primary focus:border-primary"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500 text-sm mt-1" />
+                </FormItem>
+              )}
+            />
 
-            <div className="space-y-2 sm:space-y-3">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        placeholder="Email"
-                        type="email"
-                        {...field}
-                        className="bg-black/40 border-white/20 text-white placeholder-white/50 focus:border-white/40 focus:ring-white/30 h-10 sm:h-12 rounded-lg backdrop-blur-sm"
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-300" />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <PasswordInput
-                        placeholder="Password"
-                        {...field}
-                        className="bg-black/40 border-white/20 text-white placeholder-white/50 focus:border-white/40 focus:ring-white/30 h-10 sm:h-12 rounded-lg backdrop-blur-sm"
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-300" />
-                  </FormItem>
-                )}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <PasswordInput
+                      placeholder="Password"
+                      {...field}
+                      className="h-10 border-gray-300 text-gray-900 placeholder:text-gray-600 focus:ring-primary focus:border-primary"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500 text-sm mt-1" />
+                </FormItem>
+              )}
+            />
 
             <Button
               type="submit"
-              className="w-full bg-white text-black hover:bg-white/90 font-medium hover:cursor-pointer h-10 sm:h-12 rounded-lg shadow-lg transition-all duration-200"
+              className="w-full h-10 bg-primary cursor-pointer text-white"
             >
               Sign in
             </Button>
 
-            <div className="text-center text-xs text-white/60 px-2">
-              You acknowledge that you read, and agree to,{" "}
-              <a href="#" className="text-white/80 hover:text-white underline">
-                Terms of Service and our Privacy Policy
+            <p className="text-xs text-center text-gray-500">
+              By signing in, you agree to our{" "}
+              <a
+                href="#"
+                className="underline text-gray-700 hover:text-black"
+              >
+                Terms
+              </a>{" "}
+              and{" "}
+              <a
+                href="#"
+                className="underline text-gray-700 hover:text-black"
+              >
+                Privacy Policy
               </a>
-            </div>
+              .
+            </p>
           </form>
         </Form>
       </div>

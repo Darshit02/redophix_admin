@@ -6,48 +6,56 @@ import { Separator } from "@/components/ui/separator";
 import { LockKeyhole } from "lucide-react";
 import { useState } from "react";
 
-const Settings = () => {
-
+export default function Settings() {
   const [open, setOpen] = useState(false);
 
   return (
     <div className="flex flex-col h-full px-4 py-6 md:px-6">
-      <p className="text-sm md:text-base text-gray-800 dark:text-gray-200 mb-3">
-        Manage your account settings and preferences here.
-      </p>
+      <div className="space-y-1 mb-6">
+        <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+          Account Settings
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          Manage your personal information, security settings, and theme preferences.
+        </p>
+      </div>
 
-      <Separator />
+      <Separator className="mb-6" />
 
-      <div className="flex-1 mt-2 space-y-6">
-        <div>
-          <p className="text-sm md:text-base text-gray-800 dark:text-gray-400 mb-4">
-            Change Email and Password
-          </p>
+      {/* Email & Password Section */}
+      <section className="space-y-4 mb-10">
+        <h2 className="text-lg font-medium text-foreground">Security</h2>
+        <p className="text-sm text-muted-foreground mb-2">
+          Update your email address or change your password.
+        </p>
 
-          <div className="flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0">
-            <div className="w-full md:max-w-md">
-              <ChangeEmailForm />
-              <Button onClick={() => setOpen(true)} className="cursor-pointer">
-                <LockKeyhole className="h-3 w-3" />
-                Change Password
-              </Button>
-            </div>
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="w-full md:max-w-md space-y-4">
+            <ChangeEmailForm />
+            <Button
+              onClick={() => setOpen(true)}
+              variant="outline"
+              className="w-full sm:w-auto"
+            >
+              <LockKeyhole className="w-4 h-4 mr-2" />
+              Change Password
+            </Button>
           </div>
         </div>
 
         <ResetPasswordAlert open={open} setOpen={setOpen} />
+      </section>
 
-        <Separator />
+      <Separator className="mb-10" />
 
-        <div>
-          <p className="text-sm md:text-base text-gray-800 dark:text-gray-400 mb-4">
-            Select or customize your UI theme
-          </p>
-          <DarkModetoggle />
-        </div>
-      </div>
+      {/* Theme Mode Section */}
+      <section className="space-y-4">
+        <h2 className="text-lg font-medium text-foreground">Theme Preferences</h2>
+        <p className="text-sm text-muted-foreground mb-2">
+          Choose between light, dark, or system theme.
+        </p>
+        <DarkModetoggle />
+      </section>
     </div>
   );
-};
-
-export default Settings;
+}

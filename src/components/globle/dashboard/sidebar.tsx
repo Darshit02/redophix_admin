@@ -10,12 +10,17 @@ import {
   Menu,
   UsersRound,
 } from "lucide-react";
-
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils"; // tailwind class merge helper
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface SidebarProps {
-  isOpen?: boolean;
   onClose?: () => void;
 }
 
@@ -28,7 +33,6 @@ export default function Sidebar({ onClose }: SidebarProps) {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
@@ -38,7 +42,6 @@ export default function Sidebar({ onClose }: SidebarProps) {
     { name: "Dashboard", icon: Gauge, path: "/admin/dashboard" },
     { name: "Portfolio", icon: Image, path: "/admin/portfolio" },
     { name: "Inquiries", icon: Mail, path: "/admin/inquiries" },
-    // { name: "Pending Work", icon: ClipboardList, path: "/admin/pending-work" },
     { name: "Teams", icon: UsersRound, path: "/admin/teams" },
     { name: "Services", icon: Package, path: "/admin/services" },
     { name: "Settings", icon: Settings, path: "/admin/settings" },
@@ -57,57 +60,31 @@ export default function Sidebar({ onClose }: SidebarProps) {
   };
 
   return (
-    <motion.div
-      animate={{ width: isMobile ? 260 : collapsed ? 80 : 260 }}
-      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="h-screen border-r flex flex-col overflow-hidden bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-800/80"
-    >
-      <div className="p-4 flex flex-col h-full">
-        {/* Header with collapse/close toggle */}
-        <div className="flex items-center justify-end mb-8">
-          <button
-            onClick={handleToggleCollapse}
-            className="hover:bg-gray-100 dark:hover:bg-slate-800/20 text-gray-800 dark:text-gray-300 p-3 rounded-lg transition-colors"
-            aria-label={
-              isMobile
-                ? "Close sidebar"
-                : collapsed
-                ? "Expand sidebar"
-                : "Collapse sidebar"
-            }
-          >
-            {collapsed ? (
-              <Menu className="w-5 h-5" />
-            ) : (
-              <X className="w-5 h-5" />
-            )}
-          </button>
-        </div>
+    <TooltipProvider>
+      <motion.div
+        animate={{ width: isMobile ? 260 : collapsed ? 80 : 260 }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className="h-screen border-r flex flex-col overflow-hidden 
+                   bg-sidebar text-sidebar-foreground border-sidebar-border"
+      >
+        <div className="p-4 flex flex-col h-full">
+          {/* Navigation */}
+          <nav className="flex flex-col gap-2 flex-1">
+            {menuItems.map(({ name, icon: Icon, path }) => {
+              const isActive = location.pathname === path;
+              const linkClasses = cn(
+                "flex items-center p-3 pl-4 rounded-xl transition-all duration-200 group",
+                isActive
+                  ? "bg-primary/10 text-primary font-medium border-r-2 border-primary"
+                  : "hover:bg-muted/40 text-muted-foreground border-r-2 border-transparent"
+              );
 
-        {/* Navigation Menu */}
-        <nav className="flex flex-col space-y-2 flex-1">
-          {menuItems.map(({ name, icon: Icon, path }) => {
-            const isActive = location.pathname === path;
-            return (
-              <Link
-                key={name}
-                to={path}
-                title={collapsed && !isMobile ? name : ""}
-                onClick={handleMenuClick}
-                className={`flex items-center p-3 rounded-xl transition-all duration-200
-                  ${
-                    isActive
-                      ? "bg-gray-200 dark:bg-slate-800 text-gray-900 dark:text-white font-semibold "
-                      : "hover:bg-gray-100 dark:hover:bg-slate-800 text-gray-700 dark:text-gray-300"
-                  }`}
-              >
-                <Icon
-                  className={`w-5 h-5 flex-shrink-0 ${
-                    isActive
-                      ? "text-gray-900 dark:text-white"
-                      : "text-gray-500 dark:text-gray-400"
-                  }`}
-                />
+              const iconClasses = cn(
+                "w-5 h-5 flex-shrink-0",
+                isActive ? "text-primary" : "text-muted-foreground"
+              );
+
+              const label = (
                 <AnimatePresence mode="wait">
                   {(!collapsed || isMobile) && (
                     <motion.span
@@ -121,37 +98,60 @@ export default function Sidebar({ onClose }: SidebarProps) {
                     </motion.span>
                   )}
                 </AnimatePresence>
-              </Link>
-            );
-          })}
-        </nav>
+              );
 
-        {/* Logout Button */}
-        <div className="pt-6 mt-auto">
-          <button
-            title={collapsed && !isMobile ? "Logout" : ""}
-            className="flex items-center p-3 rounded-xl transition-all duration-200 
-              bg-gradient-to-br from-gray-100 to-white dark:from-slate-800/20 dark:to-slate-900/10 
-              backdrop-blur-md w-full hover:bg-gray-200 dark:hover:bg-slate-800 cursor-pointer
-              text-gray-700 dark:text-gray-300 "
-          >
-            <LogOut className="w-5 h-5  flex-shrink-0 " />
-            <AnimatePresence mode="wait">
-              {(!collapsed || isMobile) && (
-                <motion.span
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -10 }}
-                  transition={{ duration: 0.2 }}
-                  className="ml-3 text-sm whitespace-nowrap overflow-hidden "
+              return collapsed && !isMobile ? (
+                <Tooltip key={name}>
+                  <TooltipTrigger asChild>
+                    <Link to={path} onClick={handleMenuClick} className={linkClasses}>
+                      <Icon className={iconClasses} />
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">{name}</TooltipContent>
+                </Tooltip>
+              ) : (
+                <Link
+                  key={name}
+                  to={path}
+                  onClick={handleMenuClick}
+                  className={linkClasses}
                 >
-                  Logout
-                </motion.span>
+                  <Icon className={iconClasses} />
+                  {label}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Footer Actions */}
+          <div className="space-y-2 pt-6 mt-auto">
+            {/* Collapse / Expand Button */}
+            <button
+              onClick={handleToggleCollapse}
+              title={collapsed && !isMobile ? "Expand" : "Collapse"}
+              className="flex items-center p-3 pl-4 rounded-xl w-full transition-colors
+                         hover:bg-muted/40 text-muted-foreground"
+            >
+              {collapsed ? <Menu className="w-5 h-5" /> : <X className="w-5 h-5" />}
+              {(!collapsed || isMobile) && (
+                <span className="ml-3 text-sm">Collapse</span>
               )}
-            </AnimatePresence>
-          </button>
+            </button>
+
+            {/* Logout Button */}
+            <button
+              title={collapsed && !isMobile ? "Logout" : ""}
+              className="flex items-center p-3 pl-4 rounded-xl w-full transition-colors
+                         hover:bg-muted/40 text-muted-foreground"
+            >
+              <LogOut className="w-5 h-5" />
+              {(!collapsed || isMobile) && (
+                <span className="ml-3 text-sm">Logout</span>
+              )}
+            </button>
+          </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </TooltipProvider>
   );
 }
